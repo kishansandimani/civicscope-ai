@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-tint": "#d0bcff",
+        "primary": "#d0bcff",
+        "secondary-fixed-dim": "#c3c0ff",
+        "secondary-fixed": "#e2dfff",
+        "surface-container-low": "#191b29",
+        "secondary-container": "#3626ce",
+        "outline-variant": "#494454",
+        "tertiary-fixed-dim": "#4cd7f6",
+        "surface": "#101221",
+        "surface-container-high": "#272938",
+        "on-background": "#e1e1f5",
+        "inverse-on-surface": "#2e2f3f",
+        "primary-container": "#a078ff",
+        "surface-container-highest": "#323443",
+        "on-tertiary": "#003640",
+        "on-error-container": "#ffdad6",
+        "surface-bright": "#363848",
+        "on-secondary-fixed": "#0f0069",
+        "on-surface-variant": "#cbc3d7",
+        "surface-container-lowest": "#0b0d1b",
+        "on-primary-fixed": "#23005c",
+        "inverse-primary": "#6d3bd7",
+        "error": "#ff4d79",
+        "error-container": "#93000a",
+        "on-primary-container": "#340080",
+        "tertiary-fixed": "#acedff",
+        "on-tertiary-fixed-variant": "#004e5c",
+        "on-secondary-fixed-variant": "#3323cc",
+        "primary-fixed": "#e9ddff",
+        "inverse-surface": "#e1e1f5",
+        "on-secondary": "#1d00a5",
+        "tertiary-container": "#009eb9",
+        "on-tertiary-container": "#002f38",
+        "on-surface": "#e1e1f5",
+        "on-primary": "#3c0091",
+        "surface-variant": "#323443",
+        "background": "#101221",
+        "primary-fixed-dim": "#d0bcff",
+        "on-tertiary-fixed": "#001f26",
+        "on-secondary-container": "#b3b1ff",
+        "outline": "#958ea0",
+        "tertiary": "#4cd7f6",
+        "surface-dim": "#101221",
+        "surface-container": "#1d1f2d",
+        "on-error": "#690005",
+        "secondary": "#c3c0ff",
+        "on-primary-fixed-variant": "#5516be"
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "2xl": "1rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "space-2xl": "3rem",
+        "space-md": "1rem",
+        "space-lg": "1.5rem",
+        "space-xl": "2rem",
+        "space-xs": "0.5rem",
+        "margin-mobile": "1rem",
+        "space-sm": "0.75rem",
+        "space-2xs": "0.25rem",
+        "gutter-mobile": "1rem",
+        "margin": "2rem",
+        "gutter": "1.5rem"
+      },
+      fontFamily: {
+        "headline-lg": ["Plus Jakarta Sans"],
+        "code-md": ["JetBrains Mono"],
+        "headline-sm": ["Plus Jakarta Sans"],
+        "label-md": ["Inter"],
+        "body-md": ["Inter"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "code-sm": ["JetBrains Mono"],
+        "body-sm": ["Inter"],
+        "display": ["Plus Jakarta Sans"],
+        "display-hero": ["Plus Jakarta Sans"],
+        "headline-lg-mobile": ["Plus Jakarta Sans"],
+        "display-mobile": ["Plus Jakarta Sans"],
+        "label-sm": ["Inter"],
+        "body-lg": ["Inter"],
+        "data-mono": ["JetBrains Mono"]
+      }
+    }
+  }
+};
+</script>
+<style>
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #0b0d1b;
+    color: #e1e1f5;
+    overscroll-behavior: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes navGradientFlow { 
+  0% { background-position: 0% 50%; } 
+  50% { background-position: 100% 50%; } 
+  100% { background-position: 0% 50%; } 
+}
+@keyframes voiceBreathingGlow { 
+  0%, 100% { box-shadow: 0 0 16px rgba(168, 85, 247, 0.4), 0 0 32px rgba(99, 102, 241, 0.2); } 
+  50% { box-shadow: 0 0 28px rgba(168, 85, 247, 0.75), 0 0 50px rgba(6, 182, 212, 0.45); } 
+}
+@keyframes subtlePulseRadar { 
+  0% { transform: scale(0.95); opacity: 0.8; } 
+  50% { transform: scale(1.2); opacity: 0.2; } 
+  100% { transform: scale(0.95); opacity: 0.8; } 
+}
+@keyframes waveAnimation { 
+  0%, 100% { height: 20%; } 
+  25% { height: 80%; } 
+  50% { height: 40%; } 
+  75% { height: 100%; } 
+}
+@keyframes barShimmer { 
+  0% { background-position: 0% 0%; } 
+  100% { background-position: 200% 0%; } 
+}
+@keyframes dropdownEnter {
+  0% { opacity: 0; transform: translateY(-8px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dropdown-anim {
+  animation: dropdownEnter 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-nav-flow { 
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6, #06b6d4, #ec4899, #8b5cf6); 
+  background-size: 300% 300%; 
+  animation: navGradientFlow 8s ease infinite; 
+}
+.animate-voice-breath { 
+  animation: voiceBreathingGlow 3.5s ease-in-out infinite; 
+}
+.radar-pulse { 
+  box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); 
+  animation: pulse-ring 2s cubic-bezier(0.24, 0, 0.38, 1) infinite; 
+}
+@keyframes pulse-ring { 
+  0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.6); } 
+  70% { box-shadow: 0 0 0 8px rgba(6, 182, 212, 0); } 
+  100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); } 
+}
+.progress-pulse { 
+  background-size: 200% 100%; 
+  animation: barShimmer 3s ease infinite; 
+}
+.wave-bar {
+  animation: waveAnimation 1.3s ease-in-out infinite alternate;
+  transform-origin: bottom;
+}
+.glass-panel {
+  background: rgba(16, 18, 33, 0.70);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel:hover {
+  transform: translateY(-2px);
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 12px 36px 0 rgba(139, 92, 246, 0.28);
+}
+.glass-inset {
+  background: rgba(11, 13, 27, 0.70);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-nav-flow, .animate-voice-breath, .radar-pulse, .progress-pulse, .wave-bar, .dropdown-anim {
+    animation: none !important;
+  }
+}
+</style>
+<title>CivicProbe · CivicScope AI</title></head>
+<body class="bg-[#0b0d1b] font-body-md text-on-surface antialiased selection:bg-purple-500/30 selection:text-white relative overflow-x-hidden min-h-screen" data-page="civicprobe">
+<!-- 1. Background Atmosphere: WebGL Aurora Shader Canvas -->
+<div class="fixed inset-0 w-full h-full pointer-events-none z-0" style="display:block;">
+<canvas height="3234" id="shader-canvas-aurora" style="display:block;width:100%;height:100%" width="1280"></canvas>
+<script>
+  (function() {
+    const canvas = document.getElementById('shader-canvas-aurora');
+    function syncSize() {
+      const w = canvas.clientWidth || window.innerWidth || 1280;
+      const h = canvas.clientHeight || window.innerHeight || 720;
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+    }
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(syncSize).observe(canvas);
+    }
+    syncSize();
+
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+    const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+    const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+float snoise(vec2 v) {
+    const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+                        -0.577350269189626, 0.024390243902439);
+    vec2 i  = floor(v + dot(v, C.yy));
+    vec2 x0 = v -   i + dot(i, C.xx);
+    vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    vec4 x12 = x0.xyxy + C.xxzz;
+    x12.xy -= i1;
+    i = mod289(i);
+    vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+    m = m*m; m = m*m;
+    vec3 x = 2.0 * fract(p * C.www) - 1.0;
+    vec3 h = abs(x) - 0.5;
+    vec3 ox = floor(x + 0.5);
+    vec3 a0 = x - ox;
+    m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+    vec3 g;
+    g.x  = a0.x  * x0.x  + h.x  * x0.y;
+    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+    return 130.0 * dot(m, g);
+}
+
+void main() {
+    vec2 st = gl_FragCoord.xy / u_resolution.xy;
+    float aspect = u_resolution.x / u_resolution.y;
+    vec2 p = st;
+    p.x *= aspect;
+
+    float t = u_time * 0.25;
+
+    float n1 = snoise(p * 1.5 + vec2(t * 0.4, sin(t * 0.3) * 0.5));
+    float n2 = snoise(p * 2.2 - vec2(cos(t * 0.35) * 0.6, t * 0.5) + vec2(n1 * 0.8));
+    float n3 = snoise(p * 3.1 + vec2(sin(t * 0.5) * 0.7, cos(t * 0.4) * 0.7) + vec2(n2 * 0.6));
+
+    vec3 baseColor = vec3(0.043, 0.051, 0.106); // #0b0d1b
+    vec3 purple1   = vec3(0.545, 0.235, 0.965); // #8b5cf6
+    vec3 blue1     = vec3(0.310, 0.275, 0.945); // #4f46e5
+    vec3 cyan1     = vec3(0.024, 0.714, 0.831); // #06b6d4
+    vec3 magenta   = vec3(0.925, 0.282, 0.600); // #ec4899
+
+    float wave1 = smoothstep(-0.2, 0.9, n1);
+    float wave2 = smoothstep(-0.3, 0.8, n2);
+    float wave3 = smoothstep(-0.1, 0.85, n3);
+
+    vec3 col = baseColor;
+    col += purple1 * (wave1 * 0.38);
+    col += blue1 * (wave2 * 0.34);
+    col += cyan1 * (wave3 * wave1 * 0.30);
+    col += magenta * (wave2 * wave3 * 0.22);
+
+    vec2 center1 = vec2(0.25 * aspect, 0.75) + vec2(sin(t * 0.8) * 0.12, cos(t * 0.6) * 0.1);
+    float d1 = length(p - center1);
+    col += purple1 * (0.18 / (d1 * 2.2 + 0.4));
+
+    vec2 center2 = vec2(0.85 * aspect, 0.35) + vec2(cos(t * 0.7) * 0.14, sin(t * 0.9) * 0.12);
+    float d2 = length(p - center2);
+    col += cyan1 * (0.16 / (d2 * 2.5 + 0.5));
+
+    float vignette = smoothstep(1.4, 0.4, length(st - 0.5));
+    col = mix(baseColor * 0.8, col, clamp(vignette * 1.1, 0.0, 1.0));
+
+    gl_FragColor = vec4(col, 1.0);
+}`;
+    function cs(type, src) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    }
+    const prog = gl.createProgram();
+    gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+    gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const pos = gl.getAttribLocation(prog, 'a_position');
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+    const uTime = gl.getUniformLocation(prog, 'u_time');
+    const uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+    function render(t) {
+      if (typeof ResizeObserver === 'undefined') syncSize();
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      if (uTime) gl.uniform1f(uTime, t * 0.001);
+      if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(render);
+    }
+    render(0);
+  })();
+  </script>
+</div>
+<!-- Left Sidebar Navigation (Frosted Glass Shell) -->
+<aside class="fixed left-0 top-0 h-full w-72 backdrop-blur-2xl bg-[#0b0d1b]/80 border-r border-white/10 z-50 flex flex-col justify-between shadow-[4px_0_28px_rgba(0,0,0,0.65)] overflow-y-auto">
+<div class="flex flex-col">
+<!-- Brand / Logo -->
+<div class="h-16 px-space-md flex items-center gap-space-sm bg-[#101221]/70 backdrop-blur-xl border-b border-white/10">
+<div class="relative">
+<img alt="CivicScope AI Logo" class="h-8 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]" src="https://lh3.googleusercontent.com/aida/ALJJyrAam2nHnpnNOXQDrLxssBMmmzgwmYJkzzc2m3QY7om3MwkdZ1qrf_Yfh60Sy_mXEj5B-AN1YMc0AX6IBWFImbjf1yimD5M4sqG3f8AJb6AMr03xQl0YeDODH4y86A8Gb8vElmCvPuIgV9D09AO77rOJ7uTrnrEcsR7J5M1GSPl8mHPNd7nJqI5orQiVKMil4dQM-MtzPCVvv_c46VObwZHEesUZR0_FFqIxR_eqIobb"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-cyan-400 radar-pulse"></span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white leading-tight font-bold tracking-tight">CivicScope <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-300 to-indigo-400">AI</span></span>
+<span class="font-label-sm text-[10px] text-violet-300/70 uppercase tracking-wider">Governance Intelligence</span>
+</div>
+</div>
+<!-- Main Section -->
+<div class="px-space-md pt-space-md pb-space-xs">
+<span class="font-label-sm text-[10px] uppercase tracking-wider text-violet-300/50 font-bold">Main</span>
+</div>
+<nav class="px-space-sm space-y-1">
+<a class="flex items-center gap-space-sm px-space-md py-2 transition-all text-on-surface-variant hover:bg-white/[0.06] hover:text-white rounded-lg font-label-md text-label-md" data-path="overview" href="#">
+<span class="material-symbols-outlined text-[20px] text-purple-300/60">space_dashboard</span>
+<span>Overview</span>
+</a>
+</nav>
+<!-- Core AI Modules (Active on CivicProbe) -->
+<div class="px-space-md pt-space-md pb-space-xs">
+<span class="font-label-sm text-[10px] uppercase tracking-wider text-violet-300/50 font-bold">Core AI Modules</span>
+</div>
+<nav class="px-space-sm space-y-1.5">
+<!-- Active Item: CivicProbe -->
+<a aria-current="page" class="group flex items-center justify-between px-space-md py-2.5 rounded-xl bg-gradient-to-r from-purple-600/30 via-indigo-600/25 to-cyan-500/20 text-white border border-purple-400/30 shadow-[0_0_18px_rgba(139,92,246,0.3)] font-label-md text-label-md font-semibold" data-path="civicprobe" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-cyan-400">travel_explore</span>
+<span class="text-white">CivicProbe</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-cyan-400 radar-pulse"></span>
+<span class="font-code-sm text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 font-bold">Live</span>
+</div>
+</a>
+<a class="group flex items-center justify-between px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="infoconflict" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-rose-400">rule</span>
+<span>InfoConflict</span>
+</div>
+<span class="font-code-sm text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold">Alert</span>
+</a>
+<a class="group flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="accessshadow" href="#">
+<span class="material-symbols-outlined text-[20px] text-violet-400">accessibility_new</span>
+<span>AccessShadow</span>
+</a>
+<a class="group flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="rulestress-ai" href="#">
+<span class="material-symbols-outlined text-[20px] text-indigo-400">psychology</span>
+<span>RuleStress AI</span>
+</a>
+<a class="group flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="promisetrace" href="#">
+<span class="material-symbols-outlined text-[20px] text-emerald-400">verified</span>
+<span>PromiseTrace</span>
+</a>
+</nav>
+<!-- Intelligence -->
+<div class="px-space-md pt-space-md pb-space-xs">
+<span class="font-label-sm text-[10px] uppercase tracking-wider text-violet-300/50 font-bold">Intelligence</span>
+</div>
+<nav class="px-space-sm space-y-1">
+<a class="flex items-center justify-between px-space-md py-2 rounded-lg text-white bg-violet-950/40 border border-violet-500/25 hover:bg-violet-900/40 transition-all font-label-md text-label-md" data-path="civicvoice" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-violet-300 animate-pulse">mic</span>
+<span class="font-semibold">CivicVoice</span>
+</div>
+<span class="font-code-sm text-[9px] px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold">AI Core</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="reports-and-findings" href="#">
+<span class="material-symbols-outlined text-[20px]">summarize</span>
+<span>Reports &amp; Findings</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="source-library" href="#">
+<span class="material-symbols-outlined text-[20px]">source</span>
+<span>Source Library</span>
+</a>
+</nav>
+<!-- System & Accessibility -->
+<div class="px-space-md pt-space-md pb-space-xs">
+<span class="font-label-sm text-[10px] uppercase tracking-wider text-violet-300/50 font-bold">System &amp; Accessibility</span>
+</div>
+<nav class="px-space-sm space-y-1">
+<a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="accessibility-settings" href="#">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+<span>Accessibility Settings</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-white/[0.06] hover:text-white transition-all font-label-md text-label-md" data-path="platform-settings" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Platform Settings</span>
+</a>
+</nav>
+</div>
+<div class="p-space-md space-y-space-sm bg-[#0b0d1b]/85 border-t border-white/10">
+<div class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-full bg-violet-950/60 border border-violet-500/25 shadow-[0_0_14px_rgba(124,58,237,0.25)]">
+<span class="h-2 w-2 rounded-full bg-cyan-400 radar-pulse shrink-0"></span>
+<span class="font-code-sm text-[11px] text-cyan-200/90 font-semibold truncate">Voice: English (WCAG AAA)</span>
+</div>
+<div class="flex items-center justify-between text-violet-300/60 font-label-sm text-label-sm px-space-xs">
+<a class="hover:text-cyan-300 transition-colors" href="#">Help &amp; Support</a>
+<span>•</span>
+<a class="hover:text-cyan-300 transition-colors" href="#">Documentation</a>
+</div>
+</div>
+</aside>
+<!-- Main Wrapper -->
+<div class="pl-72 flex flex-col min-h-screen relative z-10">
+<!-- 2. Frosted Top Navigation Bar with Running Glow Ribbon & Interactive Dropdowns -->
+<header class="fixed top-4 left-72 right-0 z-40 flex justify-center px-4 pointer-events-none">
+<div class="pointer-events-auto w-full max-w-5xl rounded-full border border-white/20 bg-[#101221]/85 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] px-4 py-2 flex items-center justify-between relative overflow-visible transition-all duration-300 hover:border-purple-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+<div class="absolute bottom-0 left-0 right-0 h-[2px] animate-nav-flow shadow-[0_0_12px_rgba(139,92,246,0.6)] pointer-events-none rounded-full"></div>
+<div class="flex items-center gap-space-sm flex-1 max-w-md">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-violet-300/70 text-[18px] group-focus-within:text-cyan-300 transition-colors">search</span>
+<input class="w-full pl-10 pr-16 py-1.5 bg-white/[0.04] backdrop-blur-xl border border-white/15 rounded-full font-body-sm text-body-sm text-on-surface placeholder:text-violet-300/40 focus:outline-none focus:border-cyan-400/60 focus:bg-white/[0.07] focus:ring-1 focus:ring-cyan-400/50 shadow-[inset_0_1px_4px_rgba(0,0,0,0.4)] transition-all duration-300 hover:border-white/25" placeholder="Search citizen policies, circulars, URLs..." type="text"/>
+<kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 font-code-sm text-[10px] bg-violet-950/70 border border-violet-500/30 text-violet-200 px-2 py-0.5 rounded-full shadow-sm pointer-events-none flex items-center gap-0.5">Ctrl+K</kbd>
+</div>
+</div>
+<div class="flex items-center gap-2.5">
+<button class="animate-voice-breath group relative flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 text-white font-label-sm text-label-sm transition-all duration-300 border border-white/25 hover:scale-[1.03] active:scale-[0.98] cursor-pointer overflow-hidden" type="button">
+<span class="material-symbols-outlined text-[18px] text-cyan-200 animate-pulse">mic</span>
+<span class="font-semibold tracking-wide drop-shadow-sm">Ask CivicVoice</span>
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-300 radar-pulse ml-0.5"></span>
+</button>
+<!-- 1. Interactive Language Selector Dropdown -->
+<div class="relative hidden sm:block">
+<button aria-expanded="false" aria-haspopup="true" class="flex items-center gap-1.5 bg-white/[0.04] backdrop-blur-xl border border-white/10 px-3 py-1.5 rounded-full hover:border-violet-400/40 hover:bg-white/[0.07] transition-all duration-200 shadow-sm text-left focus:outline-none focus:ring-1 focus:ring-purple-400/50 cursor-pointer" id="lang-trigger" type="button">
+<span class="material-symbols-outlined text-[17px] text-violet-300">translate</span>
+<span class="font-label-sm text-[12px] text-on-surface font-medium select-none" id="current-lang-label">English</span>
+<span class="material-symbols-outlined text-[16px] text-violet-300/70 transition-transform duration-200" id="lang-arrow">expand_more</span>
+</button>
+<!-- Frosted Language Dropdown -->
+<div class="hidden absolute right-0 top-full mt-2.5 w-72 backdrop-blur-2xl bg-[#101221]/95 border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.7)] rounded-2xl p-2 z-50 dropdown-anim" id="lang-dropdown">
+<!-- Search Bar -->
+<div class="relative mb-2 px-1 pt-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-violet-300/60 text-[16px]">search</span>
+<input class="w-full pl-8 pr-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/10 text-white font-body-sm text-[12px] placeholder:text-violet-300/40 focus:outline-none focus:border-purple-400 focus:bg-white/[0.08] transition-all" id="lang-search-input" placeholder="Search 22 official languages..." type="text"/>
+</div>
+<!-- Language List -->
+<div class="space-y-0.5 max-h-64 overflow-y-auto pr-0.5" id="lang-list">
+<button class="lang-option w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-left hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-indigo-600/20 hover:border-purple-400/30 border border-transparent transition-all group" data-lang-code="en" data-lang-name="English" type="button">
+<div class="flex flex-col">
+<span class="font-label-md text-[13px] text-white font-semibold flex items-center gap-1.5">
+English
+<span class="font-code-sm text-[9px] uppercase px-1.5 py-0.2 rounded bg-purple-950/70 text-purple-300 border border-purple-500/40 font-bold">Official</span>
+</span>
+<span class="font-body-sm text-[11px] text-violet-300/60 mt-0.5">Union Gazette Standard</span>
+</div>
+<span class="material-symbols-outlined text-purple-400 text-[18px] lang-check">check</span>
+</button>
+<button class="lang-option w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-left hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-indigo-600/20 hover:border-purple-400/30 border border-transparent transition-all group" data-lang-code="hi" data-lang-name="हिन्दी (Hindi)" type="button">
+<div class="flex flex-col">
+<span class="font-label-md text-[13px] text-white font-semibold flex items-center gap-1.5">
+हिन्दी
+<span class="font-code-sm text-[9px] text-violet-300/80 font-normal">Hindi</span>
+</span>
+<span class="font-body-sm text-[11px] text-violet-300/60 mt-0.5">43.6% Population Coverage</span>
+</div>
+<span class="material-symbols-outlined text-purple-400 text-[18px] lang-check hidden">check</span>
+</button>
+<button class="lang-option w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-left hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-indigo-600/20 hover:border-purple-400/30 border border-transparent transition-all group" data-lang-code="kn" data-lang-name="ಕನ್ನಡ (Kannada)" type="button">
+<div class="flex flex-col">
+<span class="font-label-md text-[13px] text-white font-semibold flex items-center gap-1.5">
+ಕನ್ನಡ
+<span class="font-code-sm text-[9px] text-violet-300/80 font-normal">Kannada</span>
+</span>
+<span class="font-body-sm text-[11px] text-violet-300/60 mt-0.5">Karnataka State Hub</span>
+</div>
+<span class="material-symbols-outlined text-purple-400 text-[18px] lang-check hidden">check</span>
+</button>
+<button class="lang-option w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-left hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-indigo-600/20 hover:border-purple-400/30 border border-transparent transition-all group" data-lang-code="ta" data-lang-name="தமிழ் (Tamil)" type="button">
+<div class="flex flex-col">
+<span class="font-label-md text-[13px] text-white font-semibold flex items-center gap-1.5">
+தமிழ்
+<span class="font-code-sm text-[9px] text-violet-300/80 font-normal">Tamil</span>
+</span>
+<span class="font-body-sm text-[11px] text-violet-300/60 mt-0.5">Classical Official Status</span>
+</div>
+<span class="material-symbols-outlined text-purple-400 text-[18px] lang-check hidden">check</span>
+</button>
+<button class="lang-option w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-left hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-indigo-600/20 hover:border-purple-400/30 border border-transparent transition-all group" data-lang-code="te" data-lang-name="తెలుగు (Telugu)" type="button">
+<div class="flex flex-col">
+<span class="font-label-md text-[13px] text-white font-semibold flex items-center gap-1.5">
+తెలుగు
+<span class="font-code-sm text-[9px] text-violet-300/80 font-normal">Telugu</span>
+</span>
+<span class="font-body-sm text-[11px] text-violet-300/60 mt-0.5">AP &amp; Telangana</span>
+</div>
+<span class="material-symbols-outlined text-purple-400 text-[18px] lang-check hidden">check</span>
+</button>
+<button class="lang-option w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-left hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-indigo-600/20 hover:border-purple-400/30 border border-transparent transition-all group" data-lang-code="bn" data-lang-name="বাংলা (Bengali)" type="button">
+<div class="flex flex-col">
+<span class="font-label-md text-[13px] text-white font-semibold flex items-center gap-1.5">
+বাংলা
+<span class="font-code-sm text-[9px] text-violet-300/80 font-normal">Bengali</span>
+</span>
+<span class="font-body-sm text-[11px] text-violet-300/60 mt-0.5">Eastern District Coverage</span>
+</div>
+<span class="material-symbols-outlined text-purple-400 text-[18px] lang-check hidden">check</span>
+</button>
+</div>
+<!-- Dropdown Footer -->
+<div class="pt-2 mt-1 border-t border-white/10 px-2 flex items-center justify-between">
+<a class="font-label-sm text-[11px] text-cyan-300 hover:text-cyan-200 transition-colors flex items-center gap-1" href="#">
+<span>View all 22 official languages</span>
+<span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+</a>
+<span class="font-code-sm text-[10px] text-violet-400/60">Bhashini AI</span>
+</div>
+</div>
+</div>
+<button aria-label="Blind-friendly and screen reader mode" class="p-1.5 rounded-full bg-white/[0.04] backdrop-blur-xl border border-white/10 text-on-surface-variant hover:text-cyan-300 hover:border-cyan-400/40 hover:bg-cyan-500/10 transition-all duration-200 flex items-center justify-center hover:scale-105" title="Blind-Friendly &amp; Screen Reader Optimization" type="button">
+<span class="material-symbols-outlined text-[18px]">hearing</span>
+</button>
+<button class="relative p-1.5 rounded-full bg-white/[0.04] backdrop-blur-xl border border-white/10 text-on-surface-variant hover:text-white hover:border-purple-400/40 hover:bg-purple-500/10 transition-all duration-200 flex items-center justify-center hover:scale-105" title="Governance Alerts" type="button">
+<span class="material-symbols-outlined text-[18px]">notifications</span>
+<span class="absolute top-1 right-1 flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500 shadow-[0_0_8px_#f43f5e]"></span>
+</span>
+</button>
+<!-- 2. Interactive Profile Chip Dropdown -->
+<div class="relative">
+<button aria-expanded="false" aria-haspopup="true" class="flex items-center gap-2 pl-1.5 py-0.5 pr-2.5 rounded-full bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-violet-400/40 hover:bg-white/[0.08] transition-all duration-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-400/50 cursor-pointer" id="profile-trigger" type="button">
+<div class="relative flex items-center justify-center">
+<img alt="Dr. Maya Rao Profile" class="relative w-7 h-7 rounded-full object-cover ring-1 ring-purple-400/50 shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAOCG60aqkDybp0e7AH_D_cLN0Aa_HDzTNwI5dmfVQuhoWCVdftVJliMp-J7GkM77I2GI1sjjxeqmaf1GUQUoykucqsRgZhavMAqhWLtzL73xsj9meMC-SWeQCCm3uCnVNZLQTTtrX4EC4BfPxjhuKGYFopxWdVaUBCxPxY0mSK9dT9_GO_3PDxGTG7ep8ZCl51atLNv8Q9PGtqb75ThWaOmmSSytGOHsmUPgCdpw"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-[#101221] shadow-[0_0_6px_#34d399]"></span>
+</div>
+<div class="hidden xl:flex flex-col text-left">
+<span class="font-label-sm text-[12px] font-bold text-white leading-none">Dr. Maya Rao</span>
+<span class="font-label-sm text-[10px] text-violet-300/70 leading-tight mt-0.5">Senior Civic Analyst</span>
+</div>
+</button>
+<!-- Frosted Profile Dropdown -->
+<div class="hidden absolute right-0 top-full mt-2.5 w-80 backdrop-blur-2xl bg-[#101221]/95 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-2xl p-3.5 z-50 dropdown-anim" id="profile-dropdown">
+<!-- User Info Header -->
+<div class="flex items-start gap-3 pb-3 border-b border-white/10">
+<div class="relative shrink-0">
+<img alt="Dr. Maya Rao" class="w-10 h-10 rounded-full object-cover ring-2 ring-purple-400/50 shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAOCG60aqkDybp0e7AH_D_cLN0Aa_HDzTNwI5dmfVQuhoWCVdftVJliMp-J7GkM77I2GI1sjjxeqmaf1GUQUoykucqsRgZhavMAqhWLtzL73xsj9meMC-SWeQCCm3uCnVNZLQTTtrX4EC4BfPxjhuKGYFopxWdVaUBCxPxY0mSK9dT9_GO_3PDxGTG7ep8ZCl51atLNv8Q9PGtqb75ThWaOmmSSytGOHsmUPgCdpw"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#101221] shadow-[0_0_8px_#34d399]"></span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-[14px] font-bold text-white leading-tight truncate">Dr. Maya Rao</span>
+<span class="material-symbols-outlined text-[15px] text-cyan-400" title="Verified Gov Analyst">verified</span>
+</div>
+<span class="font-label-sm text-[11px] text-violet-200/90 leading-tight mt-0.5 truncate">Senior Civic Analyst</span>
+<span class="font-label-sm text-[10px] text-violet-300/70 truncate">(Digital Infrastructure &amp; Public Policy)</span>
+<span class="font-code-sm text-[10px] text-violet-300/60 truncate mt-0.5">maya.rao@civicscope.gov.in</span>
+</div>
+</div>
+<!-- Governance Scope Badge & Clearance Section -->
+<div class="py-2.5 px-2.5 my-2 rounded-xl bg-violet-950/40 border border-violet-500/25 space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[10px] text-violet-300/70 uppercase tracking-wider font-semibold">Governance Scope</span>
+<span class="font-code-sm text-[9px] uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-200 font-bold border border-purple-500/30">Active</span>
+</div>
+<p class="font-label-sm text-[11px] text-white font-medium">Lead Investigator — Statutory Compliance</p>
+<div class="flex items-center justify-between pt-1 border-t border-white/5 font-code-sm text-[10px]">
+<span class="text-violet-300/70 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-emerald-400">shield</span>
+Clearance Level 4 (State Secretariat)
+</span>
+<span class="text-cyan-300/90 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px] text-cyan-300">key</span>
+2FA Active
+</span>
+</div>
+</div>
+<!-- Quick Navigation Links -->
+<div class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-violet-200 hover:text-white hover:bg-white/[0.06] transition-all font-label-md text-[12px]" href="#">
+<span class="material-symbols-outlined text-[18px] text-violet-400">badge</span>
+<span>User Profile &amp; Audit Credentials</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 rounded-xl text-violet-200 hover:text-white hover:bg-white/[0.06] transition-all font-label-md text-[12px]" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-violet-400">folder_open</span>
+<span>Saved Audit Docket &amp; Discrepancies</span>
+</div>
+<span class="font-code-sm text-[10px] px-1.5 py-0.2 rounded bg-white/10 text-violet-300">12</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-violet-200 hover:text-white hover:bg-white/[0.06] transition-all font-label-md text-[12px]" href="#">
+<span class="material-symbols-outlined text-[18px] text-violet-400">tune</span>
+<span>CivicVoice Audio &amp; Haptic Sensitivity</span>
+</a>
+<div class="flex items-center justify-between px-2.5 py-2 rounded-xl text-violet-200 hover:text-white hover:bg-white/[0.06] transition-all font-label-md text-[12px]">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-violet-400">contrast</span>
+<span>Accessibility &amp; High-Contrast Mode</span>
+</div>
+<!-- Micro-toggle switch -->
+<button aria-checked="false" class="w-8 h-4 rounded-full bg-violet-950/80 border border-violet-500/40 relative transition-colors focus:outline-none cursor-pointer" id="contrast-toggle" role="switch" type="button">
+<span class="toggle-circle w-3 h-3 rounded-full bg-violet-300 absolute left-0.5 top-0.5 transition-transform duration-200"></span>
+</button>
+</div>
+<a class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-violet-200 hover:text-white hover:bg-white/[0.06] transition-all font-label-md text-[12px]" href="#">
+<span class="material-symbols-outlined text-[18px] text-violet-400">download</span>
+<span>Export Activity Log (CSV / Encrypted Dossier)</span>
+</a>
+</div>
+<!-- Sign Out Button -->
+<div class="pt-2 mt-1 border-t border-white/10">
+<button class="w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-rose-300/80 hover:text-rose-200 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/30 transition-all font-label-md text-[12px] group" type="button">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-rose-400 group-hover:translate-x-0.5 transition-transform">logout</span>
+<span class="font-medium">Sign Out / Switch Investigator</span>
+</div>
+<span class="font-code-sm text-[10px] text-rose-400/60 uppercase">Sec-Lock</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Body -->
+<main class="w-full flex-1 px-space-lg py-space-lg pt-24"><div class="flex flex-col w-full gap-space-lg"><div><p class="text-xs uppercase tracking-[0.2em] text-violet-300/70 font-bold mb-1">Module 01</p><h1 class="font-headline-lg text-headline-lg text-white font-extrabold tracking-tight">CivicProbe — Government Website Auditor</h1><p class="font-body-md text-on-surface-variant mt-1 max-w-3xl">Crawl a public government website, check its links, and flag outdated or incomplete information. Every finding comes with its evidence and the affected address.</p></div><form class="rounded-2xl frosted-glass border border-white/10 p-space-md" id="m-form" novalidate=""><div class="grid gap-3 md:grid-cols-[1fr_180px_auto] items-end"><div><label class="block text-sm text-violet-200 mb-1.5" for="cp-url">Website address</label><input autocomplete="off" class="w-full px-4 py-2.5 rounded-xl bg-[#0b0d1b]/90 border border-white/15 text-white placeholder:text-violet-300/40 focus:outline-none focus:border-purple-400/60" id="cp-url" inputmode="url" maxlength="2048" placeholder="https://example.gov.in" type="text"/></div><div><label class="block text-sm text-violet-200 mb-1.5" for="cp-pages">Pages to scan</label><select class="w-full px-4 py-2.5 rounded-xl bg-[#0b0d1b]/90 border border-white/15 text-white placeholder:text-violet-300/40 focus:outline-none focus:border-purple-400/60" id="cp-pages"><option value="3">Up to 3</option><option selected="" value="8">Up to 8</option><option value="15">Up to 15</option><option value="25">Up to 25</option></select></div><button class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 text-white font-semibold border border-white/25 hover:scale-[1.01] transition-all focus:outline-none focus:ring-2 focus:ring-purple-300/60 disabled:opacity-50 disabled:cursor-wait" type="submit">Start audit</button></div><p class="text-sm text-violet-300/70 mt-3">Only public websites can be audited; private-network addresses are blocked. Pages that need JavaScript to display content may be only partly visible.</p></form><section aria-live="polite" class="rounded-2xl frosted-glass border border-white/10 p-space-md" id="m-result" tabindex="-1"><p class="text-sm text-violet-300/70">Results will appear here after you run an analysis.</p></section><section class="rounded-2xl frosted-glass border border-white/10 p-space-md" id="m-recent"></section></div></main>
+</div>
+<script>
+  // Language Selector & Profile Dropdowns Interactivity
+    const langTrigger = document.getElementById('lang-trigger');
+    const langDropdown = document.getElementById('lang-dropdown');
+    const langArrow = document.getElementById('lang-arrow');
+    const currentLangLabel = document.getElementById('current-lang-label');
+
+    const profileTrigger = document.getElementById('profile-trigger');
+    const profileDropdown = document.getElementById('profile-dropdown');
+
+    const contrastToggle = document.getElementById('contrast-toggle');
+
+    function closeAllNavDropdowns() {
+      if (langDropdown && !langDropdown.classList.contains('hidden')) {
+        langDropdown.classList.add('hidden');
+        if (langTrigger) langTrigger.setAttribute('aria-expanded', 'false');
+        if (langArrow) langArrow.classList.remove('rotate-180');
+      }
+      if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+        profileDropdown.classList.add('hidden');
+        if (profileTrigger) profileTrigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    // Language trigger toggle
+    if (langTrigger && langDropdown) {
+      langTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = langDropdown.classList.contains('hidden');
+        closeAllNavDropdowns();
+        if (isHidden) {
+          langDropdown.classList.remove('hidden');
+          langTrigger.setAttribute('aria-expanded', 'true');
+          if (langArrow) langArrow.classList.add('rotate-180');
+        }
+      });
+
+      // Language options select
+      document.querySelectorAll('.lang-option').forEach(option => {
+        option.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const selectedName = option.getAttribute('data-lang-name');
+          if (currentLangLabel) {
+            const shortName = option.getAttribute('data-lang-code') === 'en' ? 'English' : selectedName.split(' ')[0];
+            currentLangLabel.textContent = shortName;
+          }
+          // Update checkmarks
+          document.querySelectorAll('.lang-option .lang-check').forEach(chk => chk.classList.add('hidden'));
+          const check = option.querySelector('.lang-check');
+          if (check) check.classList.remove('hidden');
+
+          closeAllNavDropdowns();
+        });
+      });
+
+      // Language search filter
+      const langSearchInput = document.getElementById('lang-search-input');
+      if (langSearchInput) {
+        langSearchInput.addEventListener('click', (e) => e.stopPropagation());
+        langSearchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          document.querySelectorAll('.lang-option').forEach(item => {
+            const text = item.innerText.toLowerCase();
+            if (text.includes(query)) {
+              item.style.display = 'flex';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      }
+    }
+
+    // Profile trigger toggle
+    if (profileTrigger && profileDropdown) {
+      profileTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = profileDropdown.classList.contains('hidden');
+        closeAllNavDropdowns();
+        if (isHidden) {
+          profileDropdown.classList.remove('hidden');
+          profileTrigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      profileDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    // High contrast mode interactive toggle
+    if (contrastToggle) {
+      contrastToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isChecked = contrastToggle.getAttribute('aria-checked') === 'true';
+        const circle = contrastToggle.querySelector('.toggle-circle');
+        if (isChecked) {
+          contrastToggle.setAttribute('aria-checked', 'false');
+          contrastToggle.classList.remove('bg-purple-600');
+          contrastToggle.classList.add('bg-violet-950/80');
+          circle.classList.remove('translate-x-4', 'bg-white');
+          circle.classList.add('bg-violet-300');
+        } else {
+          contrastToggle.setAttribute('aria-checked', 'true');
+          contrastToggle.classList.remove('bg-violet-950/80');
+          contrastToggle.classList.add('bg-purple-600');
+          circle.classList.add('translate-x-4', 'bg-white');
+          circle.classList.remove('bg-violet-300');
+        }
+      });
+    }
+
+    // Outside click to close dropdowns
+    document.addEventListener('click', () => {
+      closeAllNavDropdowns();
+    });
+
+    // Keyboard Escape key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAllNavDropdowns();
+        if (exportDropdown && !exportDropdown.classList.contains('hidden')) {
+          exportDropdown.classList.add('hidden');
+        }
+      }
+    });
+  });
+</script>
+<script src="/static/js/config.js"></script><script src="/static/js/shell.js" type="module"></script><script src="/static/js/pages/civicprobe.js" type="module"></script></body></html>
